@@ -1,0 +1,80 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "coverage",
+  "type": "object",
+  "required": [
+    "chapters",
+    "unresolved_gaps"
+  ],
+  "properties": {
+    "chapters": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "objective_id",
+          "complete_wording_interpretation",
+          "depth_rationale",
+          "prerequisites",
+          "components"
+        ],
+        "properties": {
+          "components": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "id",
+                "requirement",
+                "role",
+                "guide_blocks",
+                "evidence_ids",
+                "completion_test",
+                "status"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "requirement": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "role": {
+                  "enum": [
+                    "direct",
+                    "supporting_prerequisite",
+                    "extension"
+                  ]
+                },
+                "guide_blocks": {
+                  "type": "array"
+                },
+                "evidence_ids": {
+                  "type": "array"
+                },
+                "completion_test": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "status": {
+                  "enum": [
+                    "covered",
+                    "partial",
+                    "not_started",
+                    "gap",
+                    "ambiguous"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "unresolved_gaps": {
+      "type": "array"
+    }
+  }
+}

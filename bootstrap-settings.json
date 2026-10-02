@@ -1,0 +1,9 @@
+{
+  "ocr": {
+    "native_text_threshold": 120,
+    "dpi": 200,
+    "psm": 3,
+    "language": "eng",
+    "timeout_seconds": 180
+  }
+}

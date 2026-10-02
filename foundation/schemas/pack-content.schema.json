@@ -1,0 +1,483 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "pack-content",
+  "type": "object",
+  "$defs": {
+    "claims": {
+      "description": "Ordered teaching units that tile this record's teaching text; each is bound to the exact quoted passage that supports it or declares an exemption. Mandatory when the pack declares claim_binding (FORMAT, Claim bindings).",
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "text"
+        ],
+        "properties": {
+          "text": {
+            "type": "string",
+            "minLength": 1
+          },
+          "support": {
+            "type": "object",
+            "required": [
+              "evidence_id",
+              "passage"
+            ],
+            "properties": {
+              "evidence_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "passage": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          },
+          "exempt": {
+            "enum": [
+              "instruction",
+              "framing",
+              "exclusion",
+              "figure"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "required": [
+    "id",
+    "lesson_label",
+    "authors",
+    "objectives",
+    "entry_dependencies",
+    "quantity_rationale",
+    "chapters",
+    "saqs",
+    "sbas",
+    "cards",
+    "authoring_models"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "lesson_label": {
+      "type": "string",
+      "minLength": 1
+    },
+    "authors": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "objectives": {
+      "type": "array"
+    },
+    "entry_dependencies": {
+      "type": "object"
+    },
+    "quantity_rationale": {
+      "type": "string",
+      "minLength": 1
+    },
+    "chapters": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "objective_id",
+          "file",
+          "original_number",
+          "wording",
+          "pbl_labels",
+          "title",
+          "teaching_approach",
+          "sections"
+        ],
+        "properties": {
+          "objective_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "file": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*\\.html$"
+          },
+          "original_number": {
+            "type": "string",
+            "minLength": 1
+          },
+          "wording": {
+            "type": "string",
+            "minLength": 1
+          },
+          "pbl_labels": {
+            "type": "array"
+          },
+          "title": {
+            "type": "string",
+            "minLength": 1
+          },
+          "teaching_approach": {
+            "type": "string",
+            "minLength": 1
+          },
+          "sections": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "object",
+              "required": [
+                "id",
+                "title",
+                "blocks"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "title": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "blocks": {
+                  "type": "array",
+                  "minItems": 1,
+                  "items": {
+                    "allOf": [
+                      {
+                        "type": "object",
+                        "required": [
+                          "id",
+                          "objective_ids",
+                          "entry_ids",
+                          "evidence_ids"
+                        ],
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "objective_ids": {
+                            "type": "array",
+                            "minItems": 1,
+                            "items": {
+                              "type": "string",
+                              "minLength": 1
+                            }
+                          },
+                          "entry_ids": {
+                            "type": "array",
+                            "minItems": 1,
+                            "items": {
+                              "type": "string",
+                              "minLength": 1
+                            }
+                          },
+                          "evidence_ids": {
+                            "type": "array",
+                            "minItems": 1,
+                            "items": {
+                              "type": "string",
+                              "minLength": 1
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "type": "object",
+                        "required": [
+                          "type",
+                          "text"
+                        ],
+                        "properties": {
+                          "type": {
+                            "enum": [
+                              "paragraph",
+                              "table",
+                              "figure"
+                            ]
+                          },
+                          "text": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "claims": {
+                            "$ref": "#/$defs/claims"
+                          },
+                          "headers": {
+                            "type": "array",
+                            "minItems": 1,
+                            "items": {
+                              "type": "string",
+                              "minLength": 1
+                            }
+                          },
+                          "rows": {
+                            "type": "array",
+                            "items": {
+                              "type": "array"
+                            }
+                          },
+                          "alt": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "figure": {
+                            "type": "object",
+                            "required": [
+                              "kind"
+                            ],
+                            "properties": {
+                              "kind": {
+                                "enum": [
+                                  "source_crop",
+                                  "authored_png"
+                                ]
+                              }
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "saqs": {
+      "type": "array",
+      "minItems": 0,
+      "items": {
+        "allOf": [
+          {
+            "type": "object",
+            "required": [
+              "id",
+              "objective_ids",
+              "entry_ids",
+              "evidence_ids"
+            ],
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "objective_ids": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "entry_ids": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "evidence_ids": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "prompt",
+              "marks",
+              "marking_points",
+              "explanation",
+              "guide_blocks"
+            ],
+            "properties": {
+              "claims": {
+                "$ref": "#/$defs/claims"
+              },
+              "kind": {
+                "enum": [
+                  "short_answer",
+                  "essay",
+                  "calculation",
+                  "data_interpretation",
+                  "practical"
+                ],
+                "default": "short_answer"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "sbas": {
+      "type": "array",
+      "minItems": 0,
+      "items": {
+        "allOf": [
+          {
+            "type": "object",
+            "required": [
+              "id",
+              "objective_ids",
+              "entry_ids",
+              "evidence_ids"
+            ],
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "objective_ids": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "entry_ids": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "evidence_ids": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "prompt",
+              "marks",
+              "options",
+              "correct",
+              "rationales",
+              "guide_blocks"
+            ],
+            "properties": {
+              "claims": {
+                "$ref": "#/$defs/claims"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "cards": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "allOf": [
+          {
+            "type": "object",
+            "required": [
+              "id",
+              "objective_ids",
+              "entry_ids",
+              "evidence_ids"
+            ],
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "objective_ids": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "entry_ids": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "evidence_ids": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "front",
+              "back",
+              "tags"
+            ],
+            "properties": {
+              "claims": {
+                "$ref": "#/$defs/claims"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "authoring_models": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "required": [
+          "model",
+          "reasoning",
+          "configuration_check"
+        ],
+        "properties": {
+          "model": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "\\S"
+          },
+          "reasoning": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "\\S"
+          },
+          "configuration_check": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    }
+  },
+  "description": "Executable scope gates require every declared practice type, all cards, full claim bindings and independent educational review."
+}

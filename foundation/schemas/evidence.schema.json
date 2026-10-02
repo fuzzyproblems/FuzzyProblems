@@ -1,0 +1,56 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "evidence",
+  "type": "object",
+  "additionalProperties": {
+    "type": "object",
+    "required": [
+      "source_id",
+      "source_sha256",
+      "pdf_page",
+      "context",
+      "limitations"
+    ],
+    "properties": {
+      "source_id": {
+        "type": "string",
+        "minLength": 1
+      },
+      "source_sha256": {
+        "type": "string",
+        "pattern": "^[0-9a-f]{64}$"
+      },
+      "pdf_page": {
+        "type": "integer",
+        "minimum": 1
+      },
+      "passages": {
+        "type": "array",
+        "description": "Exact text selected for highlighting: directly relevant support, including necessary qualifications, for each consuming record. Wider reading context is separate. Precision is assessed in the existing review.",
+        "items": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "reviewed_coordinates": {
+        "type": "object",
+        "required": [
+          "quads",
+          "receipt"
+        ],
+        "properties": {}
+      },
+      "context": {
+        "type": "string",
+        "minLength": 1
+      },
+      "limitations": {
+        "type": "array"
+      },
+      "highlight_optional": {
+        "type": "boolean",
+        "description": "Allow an unhighlighted original page with an explicit limitation; independent source support remains mandatory."
+      }
+    }
+  }
+}

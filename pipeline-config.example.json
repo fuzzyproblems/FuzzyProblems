@@ -1,0 +1,11 @@
+{
+  "host": "codex",
+  "hosts": {
+    "codex": {
+      "delivery": {"model": "gpt-6-sol", "reasoning_effort": "medium"}
+    },
+    "claude": {
+      "delivery": {"model": "inherit", "reasoning_effort": "inherit"}
+    }
+  }
+}
